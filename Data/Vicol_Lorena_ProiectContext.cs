@@ -17,5 +17,7 @@ namespace Vicol_Lorena_Proiect.Data
         public DbSet<Vicol_Lorena_Proiect.Models.Produs> Produs { get; set; } = default!;
 
         public DbSet<Vicol_Lorena_Proiect.Models.Echipa>? Echipa { get; set; }
+
+        public DbSet<Vicol_Lorena_Proiect.Models.Categorie>? Categorie { get; set; }
     }
 }

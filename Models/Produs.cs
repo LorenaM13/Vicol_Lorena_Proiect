@@ -18,5 +18,7 @@ namespace Vicol_Lorena_Proiect.Models
 
         public int? EchipaID { get; set; }
         public Echipa? Echipa { get; set; }
+
+        public ICollection<CategorieProdus>? CategorieProduse { get; set; }
     }
 }
