@@ -21,13 +21,26 @@ namespace Vicol_Lorena_Proiect.Pages.Produse
 
         public IList<Produs> Produs { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public ProdusData ProdusD { get; set; }
+        public int ProdusID { get; set; }
+        public int CategorieID { get; set; }
+        public async Task OnGetAsync(int? id, int? categorieID)
         {
-            if (_context.Produs != null)
+            ProdusD = new ProdusData();
+
+            ProdusD.Produse = await _context.Produs
+            .Include(b => b.Echipa)
+            .Include(b => b.CategorieProduse)
+            .ThenInclude(b => b.Categorie)
+            .AsNoTracking()
+            .OrderBy(b => b.Nume)
+            .ToListAsync();
+            if (id != null)
             {
-                Produs = await _context.Produs
-                    .Include(b => b.Echipa)
-                    .ToListAsync();
+                ProdusID = id.Value;
+                Produs produs = ProdusD.Produse
+                .Where(i => i.ID == id.Value).Single();
+                ProdusD.Categorii = produs.CategorieProduse.Select(s => s.Categorie);
             }
         }
     }

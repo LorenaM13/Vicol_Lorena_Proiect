@@ -11,7 +11,7 @@ using Vicol_Lorena_Proiect.Models;
 
 namespace Vicol_Lorena_Proiect.Pages.Produse
 {
-    public class CreateModel : PageModel
+    public class CreateModel : CategorieProdusePageModel
     {
         private readonly Vicol_Lorena_Proiect.Data.Vicol_Lorena_ProiectContext _context;
 
@@ -23,25 +23,37 @@ namespace Vicol_Lorena_Proiect.Pages.Produse
         public IActionResult OnGet()
         {
             ViewData["EchipaID"] = new SelectList(_context.Set<Echipa>(), "ID", "EchipaNume");
+
+            var produs = new Produs();
+            produs.CategorieProduse = new List<CategorieProdus>();
+            PopulateAssignedCategorieData(_context, produs);
+
             return Page();
         }
 
         [BindProperty]
         public Produs Produs { get; set; } = default!;
-        
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+
+        public async Task<IActionResult> OnPostAsync(string[] selectedCategorii)
         {
-          if (!ModelState.IsValid || _context.Produs == null || Produs == null)
+            var newProdus = new Produs();
+            if (selectedCategorii != null)
             {
-                return Page();
+                newProdus.CategorieProduse = new List<CategorieProdus>();
+                foreach (var cat in selectedCategorii)
+                {
+                    var catToAdd = new CategorieProdus
+                    {
+                        CategorieID = int.Parse(cat)
+                    };
+                    newProdus.CategorieProduse.Add(catToAdd);
+                }
             }
-
+            Produs.CategorieProduse = newProdus.CategorieProduse;
             _context.Produs.Add(Produs);
             await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            return RedirectToPage("Produse/Index");
         }
     }
 }
