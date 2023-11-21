@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int?}"
 @model Vicol_Lorena_Proiect.Pages.Echipe.IndexModel
 
 @{
@@ -43,6 +43,7 @@
                     }
                 </td>
             <td>
+                <a asp-page="./Index" asp-route-id="@item.ID">Select</a> |
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
@@ -51,3 +52,33 @@
 }
     </tbody>
 </table>
+
+@if (Model.EchipaData1.ListeAngajati != null)
+{
+    <h3>Angajatii echipei selectate</h3>
+    <table class="table">
+
+        @foreach (var item in Model.EchipaData1.Echipe)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.EchipaID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+
+                <td>
+                    @{
+                        foreach (var b in item.ListeAngajati)
+                        {
+
+                            @b.Angajat.NumeAngajat
+
+                            <br />
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}

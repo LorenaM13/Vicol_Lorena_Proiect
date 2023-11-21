@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Vicol_Lorena_Proiect.Data;
 using Vicol_Lorena_Proiect.Models;
+using Vicol_Lorena_Proiect.ViewModels;
 
 namespace Vicol_Lorena_Proiect.Pages.Echipe
 {
@@ -20,9 +21,14 @@ namespace Vicol_Lorena_Proiect.Pages.Echipe
         }
 
         public IList<Echipa> Echipa { get;set; } = default!;
+        
         public EchipaData EchipaD { get; set; }
+
+        public EchipaIndexData EchipaData1 { get; set; }
         public int EchipaID { get; set; }
         public int AngajatID { get; set; }
+
+
         public async Task OnGetAsync(int? id, int? angajatID)
         {
             EchipaD = new EchipaData();
@@ -33,12 +39,25 @@ namespace Vicol_Lorena_Proiect.Pages.Echipe
             .AsNoTracking()
             .OrderBy(b => b.EchipaNume)
             .ToListAsync();
+
+            EchipaData1 = new EchipaIndexData();
+
+            EchipaData1.Echipe = await _context.Echipa
+                .Include(b => b.ListeAngajati)
+                .ThenInclude(b => b.Angajat)
+                .OrderBy(i => i.EchipaNume)
+                .ToListAsync();
+
             if (id != null)
             {
                 EchipaID = id.Value;
                 Echipa echipa = EchipaD.Echipe
                 .Where(i => i.ID == id.Value).Single();
                 EchipaD.Angajati = echipa.ListeAngajati.Select(s => s.Angajat);
+
+                Echipa echipa1 = EchipaData1.Echipe
+                .Where(i => i.ID == id.Value).Single();
+                EchipaData1.ListeAngajati = echipa.ListeAngajati;
             }
         }
     }
