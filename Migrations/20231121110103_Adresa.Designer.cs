@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vicol_Lorena_Proiect.Data;
 
@@ -11,9 +12,10 @@ using Vicol_Lorena_Proiect.Data;
 namespace Vicol_Lorena_Proiect.Migrations
 {
     [DbContext(typeof(Vicol_Lorena_ProiectContext))]
-    partial class Vicol_Lorena_ProiectContextModelSnapshot : ModelSnapshot
+    [Migration("20231121110103_Adresa")]
+    partial class Adresa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,9 +35,6 @@ namespace Vicol_Lorena_Proiect.Migrations
                     b.Property<string>("Adresa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DataAngajarii")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("NumeAngajat")
                         .IsRequired()

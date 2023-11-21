@@ -2,10 +2,10 @@
 @model Vicol_Lorena_Proiect.Pages.Angajati.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Angajati";
 }
 
-<h1>Index</h1>
+<h1>Angajati</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -16,6 +16,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Angajat[0].NumeAngajat)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Angajat[0].TelNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Angajat[0].Adresa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Angajat[0].DataAngajarii)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -25,6 +34,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.NumeAngajat)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adresa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataAngajarii)
+            </td>
+
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
