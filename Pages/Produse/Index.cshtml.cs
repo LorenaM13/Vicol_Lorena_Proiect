@@ -24,9 +24,14 @@ namespace Vicol_Lorena_Proiect.Pages.Produse
         public ProdusData ProdusD { get; set; }
         public int ProdusID { get; set; }
         public int CategorieID { get; set; }
-        public async Task OnGetAsync(int? id, int? categorieID)
+
+        public string CurrentFilter { get; set; }
+
+        public async Task OnGetAsync(int? id, int? categorieID, string searchString)
         {
             ProdusD = new ProdusData();
+
+            CurrentFilter = searchString;
 
             ProdusD.Produse = await _context.Produs
             .Include(b => b.Echipa)
@@ -35,7 +40,16 @@ namespace Vicol_Lorena_Proiect.Pages.Produse
             .AsNoTracking()
             .OrderBy(b => b.Nume)
             .ToListAsync();
-            if (id != null)
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ProdusD.Produse = ProdusD.Produse
+                    .Where(s => s.Nume.Contains(searchString)
+                    || s.Alergeni.Contains(searchString)
+                    || s.Ingrediente.Contains(searchString));
+            }
+
+                if (id != null)
             {
                 ProdusID = id.Value;
                 Produs produs = ProdusD.Produse

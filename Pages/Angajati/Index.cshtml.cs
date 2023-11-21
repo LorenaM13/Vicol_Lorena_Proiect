@@ -21,9 +21,10 @@ namespace Vicol_Lorena_Proiect.Pages.Angajati
 
         public IList<Angajat> Angajat { get;set; } = default!;
 
+
         public async Task OnGetAsync()
         {
-            if (_context.Angajat != null)
+                if (_context.Angajat != null)
             {
                 Angajat = await _context.Angajat.ToListAsync();
             }
