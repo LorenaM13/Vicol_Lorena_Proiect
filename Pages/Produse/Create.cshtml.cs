@@ -53,7 +53,7 @@ namespace Vicol_Lorena_Proiect.Pages.Produse
             Produs.CategorieProduse = newProdus.CategorieProduse;
             _context.Produs.Add(Produs);
             await _context.SaveChangesAsync();
-            return RedirectToPage("Produse/Index");
+            return RedirectToPage("/Produse/Index");
         }
     }
 }

@@ -31,20 +31,20 @@ namespace Vicol_Lorena_Proiect.Pages.Produse
                 return NotFound();
             }
 
-            var produs =  await _context.Produs
+            Produs =  await _context.Produs
                 .Include(b => b.Echipa)
                 .Include(b => b.CategorieProduse).ThenInclude(b => b.Categorie)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
 
-            if (produs == null)
+            if (Produs == null)
             {
                 return NotFound();
             }
 
-            PopulateAssignedCategorieData(_context, produs);
+            PopulateAssignedCategorieData(_context, Produs);
 
-            ViewData["EchipaID"] = new SelectList(_context.Set<Echipa>(), "ID", "EchipaNume");
+            ViewData["EchipaID"] = new SelectList(_context.Echipa, "ID", "EchipaNume");
 
             return Page();
         }
@@ -74,7 +74,7 @@ namespace Vicol_Lorena_Proiect.Pages.Produse
             {
                 UpdateCategorieProduse(_context, selectedCategorii, produsToUpdate);
                 await _context.SaveChangesAsync();
-                return RedirectToPage("Produse/Index");
+                return RedirectToPage("/Produse/Index");
             }
 
             UpdateCategorieProduse(_context, selectedCategorii, produsToUpdate);
