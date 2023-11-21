@@ -20,12 +20,25 @@ namespace Vicol_Lorena_Proiect.Pages.Echipe
         }
 
         public IList<Echipa> Echipa { get;set; } = default!;
-
-        public async Task OnGetAsync()
+        public EchipaData EchipaD { get; set; }
+        public int EchipaID { get; set; }
+        public int AngajatID { get; set; }
+        public async Task OnGetAsync(int? id, int? angajatID)
         {
-            if (_context.Echipa != null)
+            EchipaD = new EchipaData();
+
+            EchipaD.Echipe = await _context.Echipa
+            .Include(b => b.ListeAngajati)
+            .ThenInclude(b => b.Angajat)
+            .AsNoTracking()
+            .OrderBy(b => b.EchipaNume)
+            .ToListAsync();
+            if (id != null)
             {
-                Echipa = await _context.Echipa.ToListAsync();
+                EchipaID = id.Value;
+                Echipa echipa = EchipaD.Echipe
+                .Where(i => i.ID == id.Value).Single();
+                EchipaD.Angajati = echipa.ListeAngajati.Select(s => s.Angajat);
             }
         }
     }

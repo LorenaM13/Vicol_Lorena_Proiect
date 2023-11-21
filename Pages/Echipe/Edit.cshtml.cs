@@ -11,7 +11,7 @@ using Vicol_Lorena_Proiect.Models;
 
 namespace Vicol_Lorena_Proiect.Pages.Echipe
 {
-    public class EditModel : PageModel
+    public class EditModel : ListeAngajatiPageModel
     {
         private readonly Vicol_Lorena_Proiect.Data.Vicol_Lorena_ProiectContext _context;
 
@@ -30,48 +30,53 @@ namespace Vicol_Lorena_Proiect.Pages.Echipe
                 return NotFound();
             }
 
-            var echipa =  await _context.Echipa.FirstOrDefaultAsync(m => m.ID == id);
-            if (echipa == null)
+            Echipa =  await _context.Echipa
+                .Include(b => b.ListeAngajati).ThenInclude(b => b.Angajat)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
+            
+            if (Echipa == null)
             {
                 return NotFound();
             }
-            Echipa = echipa;
+
+            PopulateAssignedAngajatData(_context, Echipa);
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id, string[] selectedAngajati)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Echipa).State = EntityState.Modified;
-
-            try
+            var echipaToUpdate = await _context.Echipa
+            .Include(i => i.ListeAngajati)
+            .ThenInclude(i => i.Angajat)
+            .FirstOrDefaultAsync(s => s.ID == id);
+            
+            if (echipaToUpdate == null)
             {
+                return NotFound();
+            }
+
+            if (await TryUpdateModelAsync<Echipa>(
+            echipaToUpdate,
+            "Echipa",
+            i => i.EchipaNume))
+            {
+                UpdateListeAngajati(_context, selectedAngajati, echipaToUpdate);
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EchipaExists(Echipa.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
-        }
-
-        private bool EchipaExists(int id)
-        {
-          return (_context.Echipa?.Any(e => e.ID == id)).GetValueOrDefault();
+            UpdateListeAngajati(_context, selectedAngajati, echipaToUpdate);
+            PopulateAssignedAngajatData(_context, echipaToUpdate);
+            return Page();
         }
     }
-}
+
+ }
+

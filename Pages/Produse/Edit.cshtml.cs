@@ -82,9 +82,5 @@ namespace Vicol_Lorena_Proiect.Pages.Produse
             return Page();
         }
 
-       // private bool ProdusExists(int id)
-        //{
-       //   return (_context.Produs?.Any(e => e.ID == id)).GetValueOrDefault();
-      //  }
     }
 }

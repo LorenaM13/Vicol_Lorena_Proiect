@@ -2,10 +2,10 @@
 @model Vicol_Lorena_Proiect.Pages.Echipe.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Echipe";
 }
 
-<h1>Index</h1>
+<h1>Echipe</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -16,15 +16,32 @@
             <th>
                 @Html.DisplayNameFor(model => model.Echipa[0].EchipaNume)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Echipa[0].ListeAngajati)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Echipa) {
-        <tr>
+@foreach (var item in Model.EchipaD.Echipe) {
+            string selectedRow = "";
+            if (item.ID == Model.EchipaID)
+            {
+                selectedRow = "table-success";
+            }
+
+        <tr class="@selectedRow">
             <td>
                 @Html.DisplayFor(modelItem => item.EchipaNume)
             </td>
+                <td>
+                    @{
+                        foreach (var angajat in item.ListeAngajati)
+                        {
+                            @angajat.Angajat.ID @: @angajat.Angajat.NumeAngajat <br />
+                        }
+                    }
+                </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |

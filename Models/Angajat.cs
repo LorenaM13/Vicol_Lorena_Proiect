@@ -1,10 +1,9 @@
 ﻿namespace Vicol_Lorena_Proiect.Models
 {
-    public class Echipa
+    public class Angajat
     {
         public int ID { get; set; }
-        public string EchipaNume { get; set; }
-        public ICollection<Produs>? Produse { get; set; }
+        public string NumeAngajat { get; set; }
         public ICollection<ListaAngajati>? ListeAngajati { get; set; }
     }
 }
