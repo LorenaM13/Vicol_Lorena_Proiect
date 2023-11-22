@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +11,8 @@ using Vicol_Lorena_Proiect.Models;
 
 namespace Vicol_Lorena_Proiect.Pages.Comenzi
 {
+    [Authorize(Roles = "Admin")]
+
     public class CreateModel : PageModel
     {
         private readonly Vicol_Lorena_Proiect.Data.Vicol_Lorena_ProiectContext _context;
@@ -25,7 +28,6 @@ namespace Vicol_Lorena_Proiect.Pages.Comenzi
 
         ViewData["ClientID"] = new SelectList(_context.Client, "ID", "FullName");
         ViewData["ProdusID"] = new SelectList(_context.Produs, "ID", "Nume");
-        ViewData["ProdusID"] = new SelectList(_context.Produs, "ID", "Cantitate");
             return Page();
         }
 
@@ -33,7 +35,6 @@ namespace Vicol_Lorena_Proiect.Pages.Comenzi
         public Comanda Comanda { get; set; } = default!;
         
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
           if (!ModelState.IsValid || _context.Comanda == null || Comanda == null)

@@ -14,6 +14,7 @@ namespace Vicol_Lorena_Proiect.Models
         public string Cantitate { get; set; }
 
         [Column(TypeName = "decimal(6, 2)")]
+        [Range(0.01, 300)]
         public decimal Pret { get; set; }
 
         public int? EchipaID { get; set; }

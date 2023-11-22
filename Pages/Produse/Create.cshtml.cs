@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,8 @@ using Vicol_Lorena_Proiect.Models;
 
 namespace Vicol_Lorena_Proiect.Pages.Produse
 {
+    [Authorize(Roles = "Admin")]
+
     public class CreateModel : CategorieProdusePageModel
     {
         private readonly Vicol_Lorena_Proiect.Data.Vicol_Lorena_ProiectContext _context;

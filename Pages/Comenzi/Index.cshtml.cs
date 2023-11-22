@@ -27,7 +27,8 @@ namespace Vicol_Lorena_Proiect.Pages.Comenzi
             {
                 Comanda = await _context.Comanda
                 .Include(c => c.Client)
-                .Include(c => c.Produs).ToListAsync();
+                .Include(c => c.Produs)
+                .ToListAsync();
             }
         }
     }

@@ -28,7 +28,6 @@ namespace Vicol_Lorena_Proiect.Pages.Clienti
         public Client Client { get; set; } = default!;
         
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
           if (!ModelState.IsValid || _context.Client == null || Client == null)
