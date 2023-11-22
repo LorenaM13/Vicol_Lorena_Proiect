@@ -7,6 +7,6 @@ namespace Vicol_Lorena_Proiect.ViewModels
     {
         public IEnumerable<Echipa> Echipe { get; set; }
         public IEnumerable<Produs> Produse { get; set; }
-        public IEnumerable<ListaAngajati> ListeAngajati { get; set; }
+        //public IEnumerable<ListaAngajati> ListeAngajati { get; set; }
     }
 }

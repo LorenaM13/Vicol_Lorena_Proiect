@@ -53,9 +53,9 @@
     </tbody>
 </table>
 
-@if (Model.EchipaData1.ListeAngajati != null)
+@if (Model.EchipaData1.Produse != null)
 {
-    <h3>Angajatii echipei selectate</h3>
+    <h3>Produsele realizate de echipa selectata</h3>
     <table class="table">
 
         @foreach (var item in Model.EchipaData1.Echipe)
@@ -69,10 +69,10 @@
 
                 <td>
                     @{
-                        foreach (var b in item.ListeAngajati)
+                        foreach (var b in item.Produse)
                         {
 
-                            @b.Angajat.NumeAngajat
+                            @b.Nume
 
                             <br />
                         }
