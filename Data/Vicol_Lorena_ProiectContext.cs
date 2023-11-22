@@ -21,5 +21,9 @@ namespace Vicol_Lorena_Proiect.Data
         public DbSet<Vicol_Lorena_Proiect.Models.Categorie>? Categorie { get; set; }
 
         public DbSet<Vicol_Lorena_Proiect.Models.Angajat>? Angajat { get; set; }
+
+        public DbSet<Vicol_Lorena_Proiect.Models.Client>? Client { get; set; }
+
+        public DbSet<Vicol_Lorena_Proiect.Models.Comanda>? Comanda { get; set; }
     }
 }

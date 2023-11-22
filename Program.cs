@@ -1,12 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Vicol_Lorena_Proiect.Data;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<Vicol_Lorena_ProiectContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Vicol_Lorena_ProiectContext") ?? throw new InvalidOperationException("Connection string 'Vicol_Lorena_ProiectContext' not found.")));
+
+builder.Services.AddDbContext<LibraryIdentityContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Vicol_Lorena_ProiectContext") ?? throw new InvalidOperationException("Connection string 'Vicol_Lorena_ProiectContext' not found.")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+    options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<LibraryIdentityContext>();
+
 
 var app = builder.Build();
 
@@ -22,6 +31,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
